@@ -56,7 +56,7 @@ export const FILE_CACHE_CONTROL = {
 
 // 公共响应头设置函数
 export function setCommonHeaders(headers, encodedFileName, fileType, cacheControl = FILE_CACHE_CONTROL.PUBLIC) {
-    headers.set('Content-Disposition', `inline; filename="${encodedFileName}"; filename*=UTF-8''${encodedFileName}`);
+    headers.set('Content-Disposition', 'inline');
     headers.set('Access-Control-Allow-Origin', '*');
     headers.set('Accept-Ranges', 'bytes');
     headers.set('Vary', 'Range');
@@ -82,7 +82,7 @@ export function handleHeadRequest(headers, etag = null) {
     // 复制关键头部
     responseHeaders.set('Content-Length', headers.get('Content-Length') || '0');
     responseHeaders.set('Content-Type', headers.get('Content-Type') || 'application/octet-stream');
-    responseHeaders.set('Content-Disposition', headers.get('Content-Disposition') || 'inline');
+    responseHeaders.set('', headers.get('Content-Disposition') || 'inline');
     responseHeaders.set('Access-Control-Allow-Origin', headers.get('Access-Control-Allow-Origin') || '*');
     responseHeaders.set('Accept-Ranges', headers.get('Accept-Ranges') || 'bytes');
     responseHeaders.set('Cache-Control', headers.get('Cache-Control') || 'public, max-age=2592000');
