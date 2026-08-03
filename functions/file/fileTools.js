@@ -132,7 +132,7 @@ export async function getFileContent(request, targetUrl, max_retries = 2) {
             if (response.ok || response.status === 304) {
                 return response;
             } else if (response.status === 404) {
-                return new Response('Error: Image Not Found', { status: 404 });
+                return new Response(null, { status: 404 });
             } else {
                 retries++;
             }
@@ -188,79 +188,37 @@ export async function returnWithCheck(context, imgRecord) {
 }
 
 function unauthorizedAdminPreviewResponse() {
-    return new Response('Admin authentication required', {
+    return new Response(null, {
         status: 401,
-        statusText: 'Unauthorized',
         headers: {
-            'Content-Type': 'text/plain;charset=UTF-8',
             'Cache-Control': FILE_CACHE_CONTROL.NO_STORE,
         },
     });
 }
 
 export async function return404(url) {
-    const Img404 = await fetch(url.origin + "/static/media/404.png");
-    if (!Img404.ok) {
-        return new Response('Error: Image Not Found',
-            {
-                status: 404,
-                headers: {
-                    "Cache-Control": "public, max-age=86400"
-                }
-            }
-        );
-    } else {
-        return new Response(Img404.body, {
-            status: 404,
-            headers: {
-                "Content-Type": "image/png",
-                "Content-Disposition": "inline",
-                "Cache-Control": "public, max-age=86400",
-            },
-        });
-    }
+    return new Response(null, {
+        status: 404,
+        headers: {
+            "Cache-Control": "public, max-age=86400"
+        }
+    });
 }
 
 export async function returnBlockImg(url) {
-    const blockImg = await fetch(url.origin + "/static/media/BlockImg.png");
-    if (!blockImg.ok) {
-        return new Response(null, {
-            status: 302,
-            headers: {
-                "Location": url.origin + "/blockimg",
-                "Cache-Control": "public, max-age=86400"
-            }
-        })
-    } else {
-        return new Response(blockImg.body, {
-            status: 403,
-            headers: {
-                "Content-Type": "image/png",
-                "Content-Disposition": "inline",
-                "Cache-Control": "public, max-age=86400",
-            },
-        });
-    }
+    return new Response(null, {
+        status: 403,
+        headers: {
+            "Cache-Control": "public, max-age=86400"
+        }
+    });
 }
 
 export async function returnWhiteListImg(url) {
-    const WhiteListImg = await fetch(url.origin + "/static/media/WhiteListOn.png");
-    if (!WhiteListImg.ok) {
-        return new Response(null, {
-            status: 302,
-            headers: {
-                "Location": url.origin + "/whiteliston",
-                "Cache-Control": "public, max-age=86400"
-            }
-        })
-    } else {
-        return new Response(WhiteListImg.body, {
-            status: 403,
-            headers: {
-                "Content-Type": "image/png",
-                "Content-Disposition": "inline",
-                "Cache-Control": "public, max-age=86400",
-            },
-        });
-    }
+    return new Response(null, {
+        status: 403,
+        headers: {
+            "Cache-Control": "public, max-age=86400"
+        }
+    });
 }
